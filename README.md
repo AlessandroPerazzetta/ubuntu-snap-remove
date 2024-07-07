@@ -66,7 +66,9 @@ Optionally delete any files previously created in home directory with the follow
 Stop snapd (snap daemon) services:
 
 `$ sudo systemctl disable snapd.service`
+
 `$ sudo systemctl disable snapd.socket`
+
 `$ sudo systemctl disable snapd.seeded.service`
 
 List all the snaps packages installed with the following command:
@@ -75,14 +77,28 @@ List all the snaps packages installed with the following command:
 
 Remove snap packages. It’s best to do so one-by-one, rather than all in one apt remove line. So something like:
 
-`$ sudo snap remove snap-store`
 `$ sudo snap remove gnome-42-2204`
-`$ sudo snap remove ubuntu-budgie-welcome` (***specific for ubuntu budgie***)
-`$ sudo snap remove snapd-desktop-integration` (***specific for ubuntu budgie***)
+
+`$ sudo snap remove firefox`
+
+`$ sudo snap remove thunderbird`
+
 `$ sudo snap remove core22`
-`$ sudo snap remove bare` (***specific for ubuntu budgie***)
+
+`$ sudo snap remove gtk-common-themes`
+
+`$ sudo snap remove bare`
+
+`$ sudo snap remove snap-store`
+
 `$ sudo snap remove snapd`
+
+`$ sudo snap remove ubuntu-budgie-welcome` (***specific for ubuntu budgie***)
+
+`$ sudo snap remove snapd-desktop-integration` (***specific for ubuntu budgie***)
+
 `$ sudo apt autoremove --purge snapd`
+
 `$ sudo rm -rf /var/cache/snapd/`
 
 ---
@@ -108,8 +124,22 @@ Save it. Then add the Mozilla team Ubuntu PPA for Firefox:
 
 `$ sudo add-apt-repository ppa:mozillateam/ppa`
 
+You can get around that by blocking Ubuntu from pulling the snap version of Thunderbird by pinning it
+
+`$ sudo vim /etc/apt/preferences.d/thunderbird-no-snap`
+
+Next, add these lines to that new file:
+
+        Package: thunderbird*
+        Pin: release o=Ubuntu*
+        Pin-Priority: -1
+
+
+
 Finally, ‘apt update’ and ‘apt install’ the latest Firefox version:
 
 `$ sudo apt update`
 
 `$ sudo apt install firefox`
+
+`$ sudo apt install thunderbird`
